@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from xgboost import XGBClassifier
 
 # Load data
-df = pd.read_csv("data/train1.csv")
+df = pd.read_csv("data/train11.csv")
 
 X = df.drop("adhd_label", axis=1)
 y = df["adhd_label"]
