@@ -21,7 +21,6 @@ def predict(data: dict):
         data["anxiety_index"],
         data["conduct_index"],
         data["odd_index"],
-        data["session_count"]
     ]])
 
     prob = float(model.predict_proba(features)[0][1])
