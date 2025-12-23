@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import joblib
+import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +21,25 @@ FEATURE_ORDER = [
 ]
 
 def predict_risk(data: dict) -> float:
-    features = np.array([[data[f] for f in FEATURE_ORDER]])
-    scaled = scaler.transform(features)
+    """
+    Expects raw (non-normalized) feature values.
+    Returns ADHD risk probability in 0–1 range.
+    """
+
+    # ✅ Create DataFrame with feature names (FIX)
+    df = pd.DataFrame([{
+        "adhd_composite": data["adhd_composite"],
+        "inattention": data["inattention"],
+        "hyperactivity": data["hyperactivity"],
+        "anxiety_index": data["anxiety_index"],
+        "conduct_index": data["conduct_index"],
+        "odd_index": data["odd_index"],
+    }])
+
+    # Scale using trained scaler
+    scaled = scaler.transform(df)
+
+    # Predict probability for positive class (ADHD = 1)
     prob = model.predict_proba(scaled)[0][1]
+
     return round(float(prob), 4)
