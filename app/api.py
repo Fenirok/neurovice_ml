@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from inference.predict import predict_risk
+from app.prediction import predict_risk
 
-app = FastAPI(title="ADHD Risk Prediction API")
+app = FastAPI()
 
 @app.get("/")
 def health():
@@ -12,5 +12,5 @@ def predict(data: dict):
     prob = predict_risk(data)
 
     return {
-        "adhd_risk_score": prob,
+        "adhd_risk_score": prob
     }
