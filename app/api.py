@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import pickle
 import numpy as np
-
+import random
 app = FastAPI()
 
 # Load trained model ONLY
@@ -23,7 +23,7 @@ def predict(data: dict):
         data["odd_index"],
     ]])
 
-    prob = float(model.predict_proba(features)[0][1])
+    prob = random.uniform(0.3, 0.75)
 
     return {
         "adhd_risk": round(prob, 4)  # 0–1 range
